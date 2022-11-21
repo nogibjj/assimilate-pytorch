@@ -1,29 +1,9 @@
-[![CI](https://github.com/nogibjj/mlops-template/actions/workflows/cicd.yml/badge.svg?branch=GPU)](https://github.com/nogibjj/mlops-template/actions/workflows/cicd.yml)
-[![Codespaces Prebuilds](https://github.com/nogibjj/mlops-template/actions/workflows/codespaces/create_codespaces_prebuilds/badge.svg?branch=GPU)](https://github.com/nogibjj/mlops-template/actions/workflows/codespaces/create_codespaces_prebuilds)
+## PyTorch projects with GPU
 
-## Template for MLOPs projects with GPU
+## Lesson 1:  Getting started with GitHub Codespaces GPU and PyTorch tutorial
 
-1. First thing to do on launch is to open a new shell and verify virtualenv is sourced.
+* [quickstart_tutorial](https://pytorch.org/tutorials/beginner/basics/quickstart_tutorial.html)
 
-Things included are:
-
-* `Makefile`
-
-* `Pytest`
-
-* `pandas`
-
-* `Pylint`
-
-* `Dockerfile`
-
-* `GitHub copilot`
-
-* `jupyter` and `ipython` 
-
-* Most common Python libraries for ML/DL and Hugging Face
-
-* `githubactions` 
 
 ### Verify GPU works
 
@@ -38,7 +18,6 @@ The following examples test out the GPU
 Additionally, this workspace is setup to fine-tune Hugging Face
 
 ![fine-tune](https://user-images.githubusercontent.com/58792/195709866-121f994e-3531-493b-99af-c3266c4e28ea.jpg)
-
 
 `python hf_fine_tune_hello_world.py` 
 
