@@ -1,8 +1,20 @@
 ## PyTorch projects with GPU
 
+## Lesson 2:  Convert hello world into a click command-line tool
+
+* It would be great to tune the amount of epochs or other parameters from the command-line.
+
+
 ## Lesson 1:  Getting started with GitHub Codespaces GPU and PyTorch tutorial
 
 * [quickstart_tutorial](https://pytorch.org/tutorials/beginner/basics/quickstart_tutorial.html)
+
+To run it:  `./pytorch-hello-world.py`
+
+
+### Query Built-in Datasets
+
+* https://pytorch.org/vision/stable/datasets.html
 
 
 ### Verify GPU works
