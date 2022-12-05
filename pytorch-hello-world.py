@@ -7,10 +7,70 @@ from torchvision.transforms import ToTensor
 import click
 
 
+# Define model
+class NeuralNetwork(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.flatten = nn.Flatten()
+        self.linear_relu_stack = nn.Sequential(
+            nn.Linear(28 * 28, 512),
+            nn.ReLU(),
+            nn.Linear(512, 512),
+            nn.ReLU(),
+            nn.Linear(512, 10),
+        )
+
+    def forward(self, x):
+        x = self.flatten(x)
+        logits = self.linear_relu_stack(x)
+        return logits
+
+
+# create a function that uses a saved model to make a prediction
+def predict(model_path="model.pth"):
+    # load the saved model
+
+    model = NeuralNetwork()
+    model.load_state_dict(torch.load(model_path))
+    classes = [
+        "T-shirt/top",
+        "Trouser",
+        "Pullover",
+        "Dress",
+        "Coat",
+        "Sandal",
+        "Shirt",
+        "Sneaker",
+        "Bag",
+        "Ankle boot",
+    ]
+
+    model.eval()
+    # Download test data from open datasets.
+    test_data = datasets.FashionMNIST(
+        root="data",
+        train=False,
+        download=True,
+        transform=ToTensor(),
+    )
+    x, y = test_data[0][0], test_data[0][1]
+    with torch.no_grad():
+        pred = model(x)
+        predicted, actual = classes[pred[0].argmax(0)], classes[y]
+        print(f'Predicted: "{predicted}", Actual: "{actual}"')
+
+
 # create a click group
 @click.group()
 def cli():
     """Pytorch Hello World that allows you to change the batch size and epochs"""
+
+
+# create a click command that predicts the model
+@cli.command("predict")
+@click.option("--model_path", default="model.pth", help="Path to the model")
+def predict_command(model_path):
+    predict(model_path)
 
 
 # create a click command
@@ -49,24 +109,6 @@ def train_cli(batch_size, epochs):
     # Get cpu or gpu device for training.
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using {device} device")
-
-    # Define model
-    class NeuralNetwork(nn.Module):
-        def __init__(self):
-            super().__init__()
-            self.flatten = nn.Flatten()
-            self.linear_relu_stack = nn.Sequential(
-                nn.Linear(28 * 28, 512),
-                nn.ReLU(),
-                nn.Linear(512, 512),
-                nn.ReLU(),
-                nn.Linear(512, 10),
-            )
-
-        def forward(self, x):
-            x = self.flatten(x)
-            logits = self.linear_relu_stack(x)
-            return logits
 
     model = NeuralNetwork().to(device)
     print(model)
@@ -119,6 +161,9 @@ def train_cli(batch_size, epochs):
         train(train_dataloader, model, loss_fn, optimizer)
         test(test_dataloader, model, loss_fn)
     print("Done!")
+
+    # save the model
+    torch.save(model.state_dict(), "model.pth")
 
 
 # invoke the group
