@@ -13,7 +13,7 @@ format:
 	black *.py 
 
 lint:
-	pylint --disable=R,C --ignore-patterns=test_.*?py *.py mylib/*.py
+	pylint --disable=R,C,self-assigning-variable,no-member --ignore-patterns=test_.*?py *.py mylib/*.py
 
 container-lint:
 	docker run --rm -i hadolint/hadolint < Dockerfile
